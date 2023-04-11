@@ -7,6 +7,7 @@ import TopBar from '../TopBar';
 import SendNotification from './SendNotification';
 import FilterNotifications from './FilterNotifications';
 
+
 export default function NotificationForm() {
     const [currentPage, setCurrentPage] = useState<string>("add");
   return (
