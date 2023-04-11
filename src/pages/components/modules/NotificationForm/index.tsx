@@ -32,6 +32,7 @@ export default function NotificationForm() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        overflow: 'hidden'
       }}>
         <Paper 
           elevation={1}
