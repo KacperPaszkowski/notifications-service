@@ -9,7 +9,11 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
-function TopBar() {
+interface TopBarProps{
+  changePage: (page: string) => void
+}
+
+function TopBar(props: TopBarProps) {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -35,8 +39,15 @@ function TopBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Button
                 sx={{ my: 2, color: 'white', display: 'block' }}
+                onClick={() => props.changePage("add")}
               >
                 Add notification
+              </Button>
+              <Button
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                onClick={() => props.changePage("filter")}
+              >
+                Filter notifications
               </Button>
           </Box>
         </Toolbar>
