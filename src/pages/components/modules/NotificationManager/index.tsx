@@ -14,7 +14,7 @@ function NotificationManager() {
         });
     
         const channel = pusher.subscribe("notification-service");
-    
+
         channel.bind("notification-event", function (data: INotification) {
           setNotifications(oldNotifications => [...oldNotifications, data])
         });
