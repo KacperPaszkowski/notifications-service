@@ -4,6 +4,10 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
+import InputAdornment from '@mui/material/InputAdornment'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import { uuid } from 'uuidv4';
 
 interface IAcceptedNotifications{
@@ -20,6 +24,7 @@ function FilterNotifications() {
         info: true,
         success: true
     });
+    const [userID, setUserID] = useState<string>(uuid());
 
     const handleChange = (type: string) => {
         setAcceptedNotifications((accepted) => ({...accepted, [type]: !accepted[type as keyof IAcceptedNotifications]}))
@@ -83,9 +88,18 @@ function FilterNotifications() {
                 />
             </Box>
             <TextField
+              InputProps={{endAdornment: (
+                <InputAdornment position="end">
+                    <Tooltip title="Copy">
+                        <IconButton>
+                            <ContentCopyIcon onClick={() => navigator.clipboard.writeText(userID)} />
+                        </IconButton>
+                    </Tooltip>
+                </InputAdornment>
+              )}}
               label="ID"
               variant="outlined"
-              defaultValue={uuid()}
+              defaultValue={userID}
               disabled
               fullWidth
               margin="normal"
