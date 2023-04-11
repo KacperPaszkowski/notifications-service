@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Pusher from "pusher-js";
-import Alert from '@mui/material/Alert'
+import Alert, { AlertColor } from '@mui/material/Alert'
 import styles from './NotificationManager.module.css'
 import { INotification } from '../../types';
 
@@ -27,7 +27,7 @@ function NotificationManager() {
     return ( 
         <div className={styles.notificationContainer}>
             {notifications.map((notification) => (
-                <Alert severity="error">{notification.message} — check it out!</Alert>
+                <Alert severity={notification.type as AlertColor}>{notification.message} — check it out!</Alert>
             ))}
         </div>
      );
