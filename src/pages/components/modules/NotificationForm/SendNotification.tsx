@@ -1,17 +1,14 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
-import TopBar from '../TopBar';
 import axios from "axios";
 import { v4 as uuid } from 'uuid';
-import { INotification } from '../../types';
 
 interface SendNotificationProps{
     uuid: string;

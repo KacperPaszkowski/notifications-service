@@ -27,6 +27,7 @@ function NotificationManager() {
         channel.bind("notification-event", function (data: INotification) {
             if(!upFilterRef.current) return
             if((upFilterRef.current as IFilter).acceptSender && (upFilterRef.current as IFilter).acceptSender != data.sender) return
+            if(!(upFilterRef.current as IFilter)[data.type as keyof IFilter]) return
             setNotifications(oldNotifications => [...oldNotifications, data])
         });
     

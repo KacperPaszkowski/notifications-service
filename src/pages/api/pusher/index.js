@@ -5,7 +5,7 @@ export const pusher = new Pusher({
   key: process.env.key,
   secret: process.env.secret,
   cluster: process.env.cluster,
-  useTLS: false, // CHANGE IN PROD
+  useTLS: false,
 });
 
 export default async function handler(req, res) {
