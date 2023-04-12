@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import TopBar from '../TopBar';
-
+import { v4 as uuid } from 'uuid';
 import SendNotification from './SendNotification';
 import FilterNotifications from './FilterNotifications';
 
-
 export default function NotificationForm() {
     const [currentPage, setCurrentPage] = useState<string>("add");
+    const [userID, setUserID] = useState<string>(uuid());
   return (
     <main>
       <Box sx={{
@@ -30,8 +30,8 @@ export default function NotificationForm() {
           <TopBar changePage={setCurrentPage}/>
           {
             {
-                "add": <SendNotification/>,
-                "filter": <FilterNotifications/>
+                "add": <SendNotification uuid={userID}/>,
+                "filter": <FilterNotifications uuid={userID}/>
             }[currentPage]
           }
         </Paper>

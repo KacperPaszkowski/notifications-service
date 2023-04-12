@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
@@ -8,7 +8,8 @@ import InputAdornment from '@mui/material/InputAdornment'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { uuid } from 'uuidv4';
+import { FilterContext, IFilter } from '@/context/FilterContext';
+import { v4 as uuid } from 'uuid';
 
 interface IAcceptedNotifications{
     error: boolean;
@@ -17,14 +18,29 @@ interface IAcceptedNotifications{
     success: boolean;
 }
 
-function FilterNotifications() {
+interface IFilterNotificationsProps{
+    uuid: string;
+}
+
+function FilterNotifications(props: IFilterNotificationsProps) {
     const [acceptedNotifications, setAcceptedNotifications] = useState<IAcceptedNotifications>({
         error: true,
         warning: true,
         info: true,
         success: true
     });
-    const [userID, setUserID] = useState<string>(uuid());
+    const [userID, setUserID] = useState<string>(props.uuid ? props.uuid : uuid());
+    const {filter, setFilter} = useContext(FilterContext)
+
+    useEffect(() => {
+        var prevFilter = {...filter}
+        delete prevFilter.acceptSender
+        setAcceptedNotifications(prevFilter)
+    }, [])
+
+    useEffect(() => {
+        setFilter((oldFilter: IFilter) => ({...oldFilter, ...acceptedNotifications}))
+    }, [acceptedNotifications])
 
     const handleChange = (type: string) => {
         setAcceptedNotifications((accepted) => ({...accepted, [type]: !accepted[type as keyof IAcceptedNotifications]}))
@@ -49,9 +65,13 @@ function FilterNotifications() {
             newAccepted[key as keyof IAcceptedNotifications] = value
         });
         setAcceptedNotifications({...newAccepted})
-        
-
     }
+
+    const handleListenIDChange = (event: any) => {
+        if(!event) return
+        setFilter({...filter, acceptSender: event.target.value})
+    }
+
 
     return ( 
         <Box
@@ -91,8 +111,8 @@ function FilterNotifications() {
               InputProps={{endAdornment: (
                 <InputAdornment position="end">
                     <Tooltip title="Copy">
-                        <IconButton>
-                            <ContentCopyIcon onClick={() => navigator.clipboard.writeText(userID)} />
+                        <IconButton onClick={() => navigator.clipboard.writeText(userID)}>
+                            <ContentCopyIcon />
                         </IconButton>
                     </Tooltip>
                 </InputAdornment>
@@ -106,6 +126,8 @@ function FilterNotifications() {
             />
             <TextField
               label="Listen for ID"
+              defaultValue={(filter as IFilter).acceptSender}
+              onChange={handleListenIDChange}
               variant="outlined"
               fullWidth
               margin="normal"

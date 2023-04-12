@@ -10,14 +10,24 @@ import MenuItem from '@mui/material/MenuItem'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import TopBar from '../TopBar';
 import axios from "axios";
+import { v4 as uuid } from 'uuid';
 import { INotification } from '../../types';
 
-function SendNotification() {
+interface SendNotificationProps{
+    uuid: string;
+}
+
+function SendNotification(props: SendNotificationProps) {
     const [message, setMessage] = useState<string>("");
     const [notificationType, setNotificationType] = useState<string>("info");
+    const [userID, setUserID] = useState(props.uuid ? props.uuid : uuid());
 
     const handleSubmit = async () => {
-        await axios.post("/api/pusher", { type: notificationType, message: message });
+        await axios.post("/api/pusher", { 
+            type: notificationType, 
+            message: message,
+            sender: userID,
+        });
     };
 
     const handleChange = (event: SelectChangeEvent) => {

@@ -9,8 +9,9 @@ export const pusher = new Pusher({
 });
 
 export default async function handler(req, res) {
-  const { message, type } = req.body;
+  const { message, type, sender } = req.body;
   const response = await pusher.trigger("notification-service", "notification-event", {
+    sender: sender,
     message: message,
     type: type,
   });
