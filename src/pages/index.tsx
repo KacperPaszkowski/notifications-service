@@ -5,11 +5,16 @@ import { FilterContextProvider } from '@/context/FilterContext';
 
 export default function Home() {
   return (
-    <main>
-      <FilterContextProvider>
-        <NotificationForm/>
-        <NotificationManager/>
-      </FilterContextProvider>
-    </main>
+    <>
+      <header>
+        <title>Notifications</title>
+      </header>
+      <main>
+        <FilterContextProvider>
+          <NotificationForm/>
+          <NotificationManager/>
+        </FilterContextProvider>
+      </main>
+    </>
   )
 }

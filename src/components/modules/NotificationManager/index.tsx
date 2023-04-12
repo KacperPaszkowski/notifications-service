@@ -57,7 +57,7 @@ function NotificationManager() {
                     }}>
                         {notification.type}
                     </AlertTitle>
-                    {notification.message} — check it out!
+                    {notification.message}
                 </Alert>
             ))}
         </div>
