@@ -14,3 +14,5 @@ You can try it yourself at interactive example [here](https://notifications.kacp
 
 - Sending/receiving notifications
 - Filtering notifications by sender and type
+
+App is running on [Vercel](https://vercel.com/ "Vercel")
